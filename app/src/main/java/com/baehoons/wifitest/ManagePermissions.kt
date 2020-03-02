@@ -6,8 +6,9 @@ import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 
-class ManagePermissions(val activity: Activity, val listPermissions: List<String>, val code: Int) {
+class ManagePermissions(val activity: FragmentActivity, val listPermissions: List<String>, val code: Int) {
 
     fun checkPermissions() =
         if (isPermissionsGranted() != PackageManager.PERMISSION_GRANTED) {
