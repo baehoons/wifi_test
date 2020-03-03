@@ -20,6 +20,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.ObservableField
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -65,7 +66,21 @@ class ScanFragment : Fragment() {
     }
 
     fun onDeviceClicked(device: ScanResult){
-        navController!!.navigate(R.id.action_scanFragment_to_connectingFragment)
+        val ssid = device.SSID
+        val bssid = device.BSSID
+        val level = calculateSignalLevel(device.level)
+        val frequency = (device.frequency).toString()
+        val capabilities = device.capabilities
+        val bundle = bundleOf(
+            "ssid" to ssid,
+            "bssid" to bssid,
+            "level" to level,
+            "frequency" to frequency,
+            "capabilities" to capabilities
+        )
+
+
+        navController!!.navigate(R.id.action_scanFragment_to_connectingFragment,bundle)
     }
 
     override fun onCreateView(
@@ -82,8 +97,6 @@ class ScanFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
         initWifi()
-        initUI()
-
 
         button_scan.setOnClickListener{
             deviceListAdapter.clearDevices()
@@ -93,8 +106,9 @@ class ScanFragment : Fragment() {
                 wifiManager.isWifiEnabled = true
             }
             scanWifi()
+            ss()
         }
-        ss()
+
     }
 
 
@@ -106,9 +120,7 @@ class ScanFragment : Fragment() {
         managePermissions = ManagePermissions(activity!!, list, requestCode)
     }
 
-    private fun initUI(){
 
-    }
 
     private fun scanWifi() {
         activity?.registerReceiver(wifiReceiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
@@ -119,9 +131,8 @@ class ScanFragment : Fragment() {
     private fun scanSuccess() {
         resultList.clear()
         resultList = wifiManager.scanResults as ArrayList<ScanResult>
+
         ss()
-
-
         for (result in resultList) {
 
             Log.d(TAG, "SSID: ${result.SSID}")
@@ -142,6 +153,7 @@ class ScanFragment : Fragment() {
         recycler_view.layoutManager = LinearLayoutManager(activity)
         recycler_view.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         recycler_view.adapter = deviceListAdapter
+        deviceListAdapter.notifyDataSetChanged()
     }
 
 

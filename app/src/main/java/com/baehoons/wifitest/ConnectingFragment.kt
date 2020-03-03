@@ -12,8 +12,19 @@ import kotlinx.android.synthetic.main.fragment_connecting.*
 
 class ConnectingFragment : Fragment() {
 
+    lateinit var ssid :String
+    lateinit var bssid :String
+    lateinit var level :String
+    lateinit var frequency :String
+    lateinit var capabilities :String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ssid = arguments!!.getString("ssid").toString()
+        bssid=arguments!!.getString("bssid").toString()
+        level=arguments!!.getString("level").toString()
+        frequency=arguments!!.getString("frequency").toString()
+        capabilities=arguments!!.getString("capabilities").toString()
 //        val arguments = intent.extras
 //        val SSID = arguments.get("wifi-SSID").toString()
 //        val BSSID = arguments.get("wifi-BSSID").toString()
@@ -39,6 +50,12 @@ class ConnectingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        textView.text = ssid
+        textView8.text = bssid
+        textView7.text = level
+        textView6.text = frequency
+        textView10.text = capabilities
+
 
     }
 }

@@ -14,16 +14,41 @@
             android:id="@+id/action_mainFragment_to_scanFragment"
             app:destination="@id/scanFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/connectingFragment"
         android:name="com.baehoons.wifitest.ConnectingFragment"
         android:label="fragment_connecting"
-        tools:layout="@layout/fragment_connecting" />
+        tools:layout="@layout/fragment_connecting" >
+        <argument
+            android:name="ssid"
+            android:defaultValue="null"
+            app:argType="string"/>
+        <argument
+            android:name="bssid"
+            android:defaultValue="null"
+            app:argType="string"/>
+        <argument
+            android:name="level"
+            android:defaultValue="null"
+            app:argType="string"/>
+        <argument
+            android:name="frequency"
+            android:defaultValue="null"
+            app:argType="string"/>
+        <argument
+            android:name="capabilities"
+            android:defaultValue="null"
+            app:argType="string"/>
+    </fragment>
+
     <fragment
         android:id="@+id/scanFragment"
         android:name="com.baehoons.wifitest.ScanFragment"
         android:label="fragment_scan"
         tools:layout="@layout/fragment_scan" >
+
+
         <action
             android:id="@+id/action_scanFragment_to_connectingFragment"
             app:destination="@id/connectingFragment" />

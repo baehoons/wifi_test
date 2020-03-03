@@ -1,21 +1,13 @@
 package com.baehoons.wifitest
 
-import android.annotation.SuppressLint
-import android.bluetooth.BluetoothDevice
 import android.net.wifi.ScanResult
-import android.net.wifi.WifiManager
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-
-import androidx.recyclerview.widget.ListAdapter
-
 import androidx.recyclerview.widget.RecyclerView
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_wifi_scan.view.*
+import kotlin.collections.ArrayList
 
-class WifiAdapter : RecyclerView.Adapter<WifiAdapter.DeviceHolder>() {
+class WifiAdapter : RecyclerView.Adapter<WifiAdapter.DeviceHolder>(){
 
     var onDeviceClickListener: ((ScanResult) -> Unit)? = null
 
@@ -40,8 +32,8 @@ class WifiAdapter : RecyclerView.Adapter<WifiAdapter.DeviceHolder>() {
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = DeviceHolder (
-        parent
+    override fun onCreateViewHolder(container: ViewGroup, viewType: Int) = DeviceHolder (
+        container
     )
 
     override fun getItemCount() = devices.size
@@ -55,11 +47,10 @@ class WifiAdapter : RecyclerView.Adapter<WifiAdapter.DeviceHolder>() {
 
     fun addDevice(device: ScanResult) {
 
-        devices.add(device)
-        notifyDataSetChanged()
-
-
-
+        if(!devices.contains(device)){
+            devices.add(device)
+            notifyDataSetChanged()
+        }
 
     }
 
