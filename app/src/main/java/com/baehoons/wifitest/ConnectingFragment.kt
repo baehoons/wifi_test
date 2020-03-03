@@ -1,13 +1,19 @@
 package com.baehoons.wifitest
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_connecting.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ConnectingFragment : Fragment() {
@@ -17,6 +23,9 @@ class ConnectingFragment : Fragment() {
     lateinit var level :String
     lateinit var frequency :String
     lateinit var capabilities :String
+    private val format:String ="yyyy년 MM월 dd일 HH시 mm분"
+    private var sdf = SimpleDateFormat(format, Locale.KOREA)
+    private val times = sdf.format(Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +64,10 @@ class ConnectingFragment : Fragment() {
         textView7.text = level
         textView6.text = frequency
         textView10.text = capabilities
+        textView2.text = times
 
+        Log.d("joon", sdf.toString())
+        Log.d("joon", times)
 
     }
 }
